@@ -1,9 +1,10 @@
-const cron = require("node-cron");
+const schedule = require("node-schedule");
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-cron.schedule("* * * * *", async () => {
+schedule.scheduleJob("*/1 * * * *", async () => {
+	// Execute something every 1 minutes
 	console.log("running a task every minute");
 	console.log(Date.now());
 	try {
