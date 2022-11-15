@@ -1,0 +1,161 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Owner {
+  id            String @id @default(uuid())
+  walletAddress String @unique
+  userId        String @unique
+}
+
+model User {
+  id            String @id @default(uuid())
+  status        STATUS @default(ACTIVE)
+  walletAddress String @unique
+  type          TYPE   @default(USER)
+  userName      String @default("usernamed")
+  bannerImage   String @default("https://res.cloudinary.com/dtrrkeb4a/image/upload/v1663911221/Exclusive/Profile/303-3034192_default-banner-banner-jpg_vgzocd.jpg")
+  profileImage  String @default("https://res.cloudinary.com/dtrrkeb4a/image/upload/v1663911221/Exclusive/Profile/303-3034192_default-banner-banner-jpg_vgzocd.jpg")
+}
+
+model Report {
+  id         String        @id @default(uuid())
+  reportedId String
+  reportType REPORT_TYPE
+  reporterId String
+  reason     String
+  DateTime   DateTime      @default(now())
+  STATUS     Report_STATUS
+}
+
+model Collection {
+  id                    String                        @id @default(uuid())
+  status                Collection_status             @default(ACTIVE)
+  creatorId             String
+  collectionAddress     String                        @unique
+  collectionDescription String
+  collectionName        String                        @default("randomCollection")
+  collectionCategory    Collection_collectionCategory
+  floorPrice            String                        @default("0")
+  nftCount              Int                           @default(0)
+  totalVolume           String                        @default("0")
+  dateTime              DateTime                      @default(now())
+  logoImage             String                        @default("https://res.cloudinary.com/dtrrkeb4a/image/upload/v1664112920/Exclusive/Collection/303-3034192_default-banner-banner-jpg_g9tavj.jpg")
+  bannerImage           String                        @default("https://res.cloudinary.com/dtrrkeb4a/image/upload/v1664112920/Exclusive/Collection/303-3034192_default-banner-banner-jpg_g9tavj.jpg")
+  featuredImage         String                        @default("https://res.cloudinary.com/dtrrkeb4a/image/upload/v1664112920/Exclusive/Collection/303-3034192_default-banner-banner-jpg_g9tavj.jpg")
+}
+
+model NFT {
+  id           String     @id @default(uuid())
+  collectionId String
+  status       NFT_status @default(ACTIVE)
+  tokenID      Int
+  uri          String     @unique
+  timestamp    DateTime   @default(now())
+  ownerId      String
+  creatorId    String
+  isMinted     Boolean    @default(false)
+}
+
+model Activity {
+  id                String               @id @default(uuid())
+  nftId             String
+  buyerId           String?
+  listingtype       Activity_listingtype
+  endDate           BigInt
+  isExpired         Boolean              @default(false)
+  sellingprice      String
+  buyingprice       String?
+  signature         String
+  listingTimestamp  DateTime             @default(now())
+  buyingTimestamp   BigInt?
+  userId            String
+  biddingSignature  String?
+  isPenddingPayment Boolean              @default(false)
+}
+
+model Bidding {
+  id          String        @id @default(uuid())
+  activityId  String
+  userId      String
+  listingtype LISTINGTYPE
+  price       String
+  endDate     BigInt
+  timestamp   DateTime      @default(now())
+  isExpired   Boolean       @default(false)
+  state       Bidding_state @default(PENDDING)
+  isPaid      Boolean       @default(false)
+}
+
+enum LISTINGTYPE {
+  FIXED_PRICE
+  TIMED_AUCTION
+  OFFER
+}
+
+enum TYPE {
+  ADMIN
+  SUPER_ADMIN
+  USER
+}
+
+enum STATUS {
+  BLOCKED
+  ACTIVE
+  REPORTED
+}
+
+enum REPORT_TYPE {
+  Collection
+  USER
+  NFT
+}
+
+enum Collection_status {
+  BLOCKED
+  ACTIVE
+  REPORTED
+}
+
+enum NFT_status {
+  BLOCKED
+  ACTIVE
+  REPORTED
+}
+
+enum Activity_listingtype {
+  FIXED_PRICE
+  TIMED_AUCTION
+  OFFER
+}
+
+enum Report_STATUS {
+  BLOCKED
+  ACTIVE
+  REPORTED
+}
+
+enum Bidding_state {
+  PENDDING
+  ACCEPTED
+  REJECTED
+}
+
+enum Collection_collectionCategory {
+  Art
+  Collectibles
+  Music
+  Photography
+  Sports
+  Cards
+  Nature
+  Utility
+  Virtual
+  Worlds
+}
