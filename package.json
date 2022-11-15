@@ -1,15 +1,16 @@
 {
-  "name": "market_place_db_event",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@prisma/client": "^4.6.1",
-    "node-cron": "^3.0.2"
-  }
+	"name": "market_place_db_event",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node index.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@prisma/client": "^4.6.1",
+		"node-cron": "^3.0.2"
+	}
 }
