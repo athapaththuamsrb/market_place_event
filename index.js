@@ -3,9 +3,9 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-schedule.scheduleJob("*/15 * * * *", async () => {
-	// Execute something every 15 minutes
-	console.log("running a task every 15 minute");
+schedule.scheduleJob("0 0 * * * *", async () => {
+	// Execute something every 1 houre
+	console.log("running a task every 1 houre");
 	console.log(Date.now());
 	try {
 		//Expire fix sale orders
